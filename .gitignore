@@ -36,4 +36,4 @@ setup.log
 _opam/
 
 # AoC input files
-inputs/
+/inputs/
