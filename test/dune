@@ -1,0 +1,11 @@
+(data_only_dirs inputs)
+
+(library
+ (modules test)
+ (name test))
+ 
+(test
+ (name day01)
+ (modules day01)
+ (libraries aoc test)
+ (deps (source_tree inputs)))
