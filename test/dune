@@ -9,3 +9,9 @@
  (modules day01)
  (libraries aoc test)
  (deps (source_tree inputs)))
+ 
+(test
+ (name day02)
+ (modules day02)
+ (libraries aoc test)
+ (deps (source_tree inputs)))

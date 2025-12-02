@@ -35,4 +35,4 @@ let mod_add m a b = (((a + b) mod m) + m) mod m
 let second (_, b) = b
 
 let part1 infile = (read_lines infile) |> (map parse_entry) |> (accumulate 50 (mod_add 100)) |> (filter (fun x -> x == 0)) |> length
-let part2 infile = (read_lines infile) |> (map parse_entry) |> (reduce(50, 0) (fun (a, n) b -> mod_add 100 a b, n + (if a + b > 0 then (a + b) / 100 else if a == 0 then abs b / 100 else abs (a + b) / 100 + 1))) |> second
+let part2 infile = (read_lines infile) |> (map parse_entry) |> (reduce (50, 0) (fun (a, n) b -> mod_add 100 a b, n + (if a + b > 0 then (a + b) / 100 else if a == 0 then abs b / 100 else abs (a + b) / 100 + 1))) |> second
