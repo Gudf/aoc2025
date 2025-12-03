@@ -10,16 +10,32 @@ let digit_to_int digit = match digit with
     | '0'..'9' -> int_of_char digit - int_of_char '0'
     | _ -> raise (Invalid_argument "Argument must be a digit from 0 to 9")
 
-let find_two_max seq = let rec aux highest next_highest seq = match seq() with
-        | Seq.Cons (e, seq) -> aux (max next_highest highest) (if highest >= next_highest then max e next_highest else e) seq
-        | Seq.Nil -> (highest, next_highest)
-    in let first, second, seq2 = take_first_two seq
-    in aux first second seq2
+let rec append e l = match l with
+    | first :: rest -> first :: (append e rest)
+    | [] -> [e]
 
-let pair_to_joltage (a, b) = a * 10 + b
+let rec shift_digits e l = match l with
+    | first :: second :: rest -> if second > first then append e (second :: rest) else first :: (shift_digits e (second :: rest))
+    | first :: [] -> [max first e]
+    | [] -> raise (Invalid_argument "Input list must not be empty")
 
-let find_joltage str = if String.length str < 2 then raise (Invalid_argument "Argument must have 2 or more characters") else
-    String.to_seq str |> Seq.map digit_to_int |> find_two_max |> pair_to_joltage
+let rec first_n n seq = match n with
+    | 0 -> ([], seq)
+    | _ -> match seq() with
+        | Seq.Nil -> raise (Invalid_argument "Not enough elements in sequence")
+        | Seq.Cons (e, seq) -> let (l, s) = (first_n (n - 1) seq) in (e :: l, s)
 
-let part1 infile = read_lines infile |> List.map find_joltage |> List.fold_left ( + ) 0
-let part2 _infile = 0
+let find_n_max n seq =
+    let rec aux l seq = match seq() with
+        | Seq.Nil -> l
+        | Seq.Cons (e, seq) -> aux (shift_digits e l) seq
+    in let l, s = first_n n seq in
+    aux l s
+
+let list_to_joltage l = List.fold_left (fun acc n -> acc * 10 + n) 0 l
+
+let find_joltage n str = if String.length str < n then raise (Invalid_argument "str argument must have at least n characters") else
+    String.to_seq str |> Seq.map digit_to_int |> find_n_max n |> list_to_joltage
+
+let part1 infile = read_lines infile |> List.map (find_joltage 2) |> List.fold_left ( + ) 0
+let part2 infile = read_lines infile |> List.map (find_joltage 12) |> List.fold_left ( + ) 0
