@@ -9,3 +9,4 @@ let () = Printf.printf "Day 3, part 1: %i\n" (Day03.part1 "inputs/day03")
 let () = Printf.printf "Day 3, part 2: %i\n" (Day03.part2 "inputs/day03")
 
 let () = Printf.printf "Day 4, part 1: %i\n" (Day04.part1 "inputs/day04")
+let () = Printf.printf "Day 4, part 2: %i\n" (Day04.part2 "inputs/day04")
