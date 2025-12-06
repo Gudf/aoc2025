@@ -1,5 +1,3 @@
-let read_lines file = In_channel.with_open_text file In_channel.input_lines
-
 let take_first_two seq = match seq() with
     | Seq.Nil -> raise (Invalid_argument "Argument must have at least 2 elements")
     | Seq.Cons(e1, seq) -> match seq() with
@@ -37,5 +35,5 @@ let list_to_joltage l = List.fold_left (fun acc n -> acc * 10 + n) 0 l
 let find_joltage n str = if String.length str < n then raise (Invalid_argument "str argument must have at least n characters") else
     String.to_seq str |> Seq.map digit_to_int |> find_n_max n |> list_to_joltage
 
-let part1 infile = read_lines infile |> List.map (find_joltage 2) |> List.fold_left ( + ) 0
-let part2 infile = read_lines infile |> List.map (find_joltage 12) |> List.fold_left ( + ) 0
+let part1 infile = Io.read_lines infile |> List.map (find_joltage 2) |> List.fold_left ( + ) 0
+let part2 infile = Io.read_lines infile |> List.map (find_joltage 12) |> List.fold_left ( + ) 0

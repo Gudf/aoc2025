@@ -1,5 +1,3 @@
-let read_lines file = In_channel.with_open_text file In_channel.input_lines
-
 let line_to_int_arr line = String.to_seq line |> Seq.map (fun c -> if c == '@' then 1 else 0) |> Array.of_seq
 
 let copy_mat mat = Array.map Array.copy mat
@@ -49,5 +47,5 @@ let remove_accessible locations = let adj = calc_adjacencies locations and n = r
 
 
 
-let part1 infile = read_lines infile |> List.map line_to_int_arr |> Array.of_list |> calc_adjacencies |> Array.to_list |> List.map Array.to_list |> List.flatten |> List.filter (function Some(v) -> v < 4 | None -> false) |> List.length
-let part2 infile = read_lines infile |> List.map line_to_int_arr |> Array.of_list |> Seq.unfold remove_accessible |> Seq.fold_left ( + ) 0
+let part1 infile = Io.read_lines infile |> List.map line_to_int_arr |> Array.of_list |> calc_adjacencies |> Array.to_list |> List.map Array.to_list |> List.flatten |> List.filter (function Some(v) -> v < 4 | None -> false) |> List.length
+let part2 infile = Io.read_lines infile |> List.map line_to_int_arr |> Array.of_list |> Seq.unfold remove_accessible |> Seq.fold_left ( + ) 0

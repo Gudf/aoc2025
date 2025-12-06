@@ -1,5 +1,3 @@
-let read_lines file = In_channel.with_open_text file In_channel.input_lines
-
 let parse_range r = String.split_on_char '-' r |> List.map int_of_string |> (function s :: l :: [] -> (s, l) | _ -> raise (Invalid_argument "Not a valid range"))
 
 let parse_ranges lines = let rec aux lines ranges = match lines with
@@ -24,5 +22,5 @@ let merge_sorted_ranges ranges =
             else aux (fst current, max e (snd current)) remaining merged
     in aux (List.hd ranges) (List.tl ranges) []
 
-let part1 infile = read_lines infile |> parse_input |> fun (ranges, ids) -> List.filter (in_any_range ranges) ids |> List.length
-let part2 infile = read_lines infile |> parse_ranges |> fst |> List.sort compare |> merge_sorted_ranges |> List.map (fun (a, b) -> b - a + 1) |> List.fold_left ( + ) 0
+let part1 infile = Io.read_lines infile |> parse_input |> fun (ranges, ids) -> List.filter (in_any_range ranges) ids |> List.length
+let part2 infile = Io.read_lines infile |> parse_ranges |> fst |> List.sort compare |> merge_sorted_ranges |> List.map (fun (a, b) -> b - a + 1) |> List.fold_left ( + ) 0
